@@ -1,5 +1,3 @@
-package account.dao;
-
 import account.domain.AccountVO;
 import database.JDBCUtil;
 
@@ -177,6 +175,4 @@ public class AccountDaoImpl implements AccountDao {
             return 0;
         }
     }
-
-
 }
