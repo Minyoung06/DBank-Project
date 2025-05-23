@@ -1,38 +1,47 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.InputStream;
+import java.sql.*;
 import java.util.Properties;
 
 public class JDBCUtil {
-    static Connection conn = null;
+
+    private static final Properties properties = new Properties();
+
     static {
-        try {
-            Properties properties = new Properties();
-            properties.load(JDBCUtil.class.getResourceAsStream("/application.properties"));
-            String driver = properties.getProperty("driver");
-            String url = properties.getProperty("url");
-            String id = properties.getProperty("id");
-            String password = properties.getProperty("password");
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url, id, password);
+        try (InputStream input = JDBCUtil.class.getResourceAsStream("/application.properties")) {
+            if (input == null) {
+                throw new RuntimeException("application.properties 파일을 찾을 수 없습니다.");
+            }
+            properties.load(input);
+            Class.forName(properties.getProperty("driver")); // JDBC 드라이버 로드
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("JDBC 초기화 실패: " + e.getMessage());
         }
     }
+
     public static Connection getConnection() {
-        return conn;
-    }
-    public static void close() {
         try {
-            if (conn != null) {
-                conn.close();
-                conn = null;
-            }
+            return DriverManager.getConnection(
+                    properties.getProperty("url"),
+                    properties.getProperty("id"),
+                    properties.getProperty("password")
+            );
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("DB 연결 실패: " + e.getMessage());
+        }
+    }
+
+    // 가변 인자를 받아 모두 close 해주는 유틸
+    public static void close(AutoCloseable... resources) {
+        for (AutoCloseable res : resources) {
+            try {
+                if (res != null) res.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
-
