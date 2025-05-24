@@ -1,4 +1,4 @@
-package org.scoula.bank.domain;
+package user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
