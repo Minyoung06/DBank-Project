@@ -18,4 +18,6 @@ public class user_productVO {
     private LocalDate start_date;
     private LocalDate end_date;
     private String status; // '가입', '해지'
+
+    private String product_name;
 }
