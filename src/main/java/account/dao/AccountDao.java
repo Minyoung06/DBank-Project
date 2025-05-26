@@ -9,5 +9,6 @@ public interface AccountDao {
     AccountVO getAccountById(int accountId);        // 계좌 ID로 조회
     AccountVO getAccountByUserId(int userId); // 유저 ID로 조회
     int updateBalance(int accountId, double balance);  // 잔액 업데이트
-    int deleteAccount(int accountId);         // 계좌 삭제
+    int deleteAccount(int accountId);// 계좌 삭제
+    boolean verifyReceiver(String accountNumber, String receiverName);
 }

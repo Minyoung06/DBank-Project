@@ -177,4 +177,24 @@ public class AccountDaoImpl implements AccountDao {
             return 0;
         }
     }
+
+    @Override
+    public boolean verifyReceiver(String accountNumber, String receiverName) {
+       String sql = """
+               SELECT 1
+                      FROM account a
+                      JOIN user u ON a.user_id = u.user_id
+                      WHERE a.account_number = ? AND u.name = ?
+               """;
+        try(Connection conn = JDBCUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, accountNumber);
+            pstmt.setString(2, receiverName);
+            try(ResultSet rs= pstmt.executeQuery()){
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
