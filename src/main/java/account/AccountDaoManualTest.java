@@ -3,11 +3,14 @@ package account;
 import account.dao.AccountDao;
 import account.dao.AccountDaoImpl;
 import account.domain.AccountVO;
+import database.JDBCUtil;
+
+import java.sql.Connection;
 
 public class AccountDaoManualTest {
     public static void main(String[] args) {
         AccountDao dao = new AccountDaoImpl();
-
+        Connection conn = JDBCUtil.getConnection();
         //insertAccount test
         AccountVO newAccount = AccountVO.builder()
                 .userId(3)          // user 테이블에 존재하는 ID
@@ -20,7 +23,7 @@ public class AccountDaoManualTest {
         System.out.println("======================================");
 
         //getAccountById test
-        AccountVO account = dao.getAccountById(1); // 1번 계좌 조회
+        AccountVO account = dao.getAccountById(conn,1); // 1번 계좌 조회
         //1,1,123456.78,1101234567890
         if (account != null) {
             System.out.println("계좌id: " + account.getAccountId());
@@ -45,7 +48,7 @@ public class AccountDaoManualTest {
         System.out.println("======================================");
 
         //updateBalance test
-        int updated = dao.updateBalance(1, 123456.78);
+        int updated = dao.updateBalance(conn,1, 123456.78);
 
         System.out.println(updated > 0 ? "✅ 잔액 업데이트 성공" : "❌ 실패");
 
