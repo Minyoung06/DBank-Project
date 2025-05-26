@@ -8,7 +8,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -122,12 +121,10 @@ public class AccountDaoImpl implements AccountDao {
 
 
     @Override
-    public AccountVO getAccountById(int accountId) {
+    public AccountVO getAccountById(Connection conn, int accountId) {
         String sql = "SELECT * FROM account WHERE account_id = ?";
 
-        try (Connection conn = JDBCUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, accountId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -146,11 +143,10 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public int updateBalance(int accountId, double balance) {
+    public int updateBalance(Connection conn, int accountId, double balance) {
         String sql = "UPDATE account SET balance = ? WHERE account_id = ?";
 
-        try (Connection conn = JDBCUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setDouble(1, balance);     // 첫 번째 ? → 새 잔액
             pstmt.setInt(2, accountId);      // 두 번째 ? → 대상 계좌 ID
@@ -176,6 +172,26 @@ public class AccountDaoImpl implements AccountDao {
             System.err.println("❌ 계좌 삭제 실패: " + e.getMessage());
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    @Override
+    public boolean verifyReceiver(String accountNumber, String receiverName) {
+       String sql = """
+               SELECT 1
+                      FROM account a
+                      JOIN user u ON a.user_id = u.user_id
+                      WHERE a.account_number = ? AND u.name = ?
+               """;
+        try(Connection conn = JDBCUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, accountNumber);
+            pstmt.setString(2, receiverName);
+            try(ResultSet rs= pstmt.executeQuery()){
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

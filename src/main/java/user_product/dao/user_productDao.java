@@ -29,4 +29,7 @@ public interface user_productDao {
 
     // 8. 만기일 내림차순 정렬
     List<user_productVO> findAllOrderByEndDateDesc();
+
+    // user가 가입한 상품들 조회
+    List<user_productVO> findJoinedProductByUserId(int userId);
 }

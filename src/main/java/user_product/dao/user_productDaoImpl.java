@@ -60,6 +60,7 @@ public class user_productDaoImpl implements user_productDao {
     }
 
     // 4. 특정 유저가 가입한 모든 상품 조회
+    // JOIN 없이 user_product 단독 조회
     @Override
     public List<user_productVO> findByUserId(int userId) {
         List<user_productVO> list = new ArrayList<>();
@@ -88,9 +89,12 @@ public class user_productDaoImpl implements user_productDao {
     @Override
     public List<user_productVO> findAllOrderByProductNameAsc() {
         List<user_productVO> list = new ArrayList<>();
-        String sql = "SELECT up.* FROM user_product up " +
-                "JOIN product p ON up.product_id = p.product_id " +
-                "ORDER BY p.product_name ASC";
+        String sql = """
+            SELECT up.*, p.name AS product_name
+            FROM user_product up
+                JOIN product p ON up.product_id = p.product_id
+            ORDER BY p.name ASC
+            """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -101,6 +105,7 @@ public class user_productDaoImpl implements user_productDao {
                         .start_date(rs.getDate("start_date").toLocalDate())
                         .end_date(rs.getDate("end_date").toLocalDate())
                         .status(rs.getString("status"))
+                        .product_name(rs.getString("product_name")) //추가
                         .build();
                 list.add(up);
             }
@@ -114,9 +119,12 @@ public class user_productDaoImpl implements user_productDao {
     @Override
     public List<user_productVO> findAllOrderByProductNameDesc() {
         List<user_productVO> list = new ArrayList<>();
-        String sql = "SELECT up.* FROM user_product up " +
-                "JOIN product p ON up.product_id = p.product_id " +
-                "ORDER BY p.product_name DESC";
+        String sql = """
+            SELECT up.*, p.name AS product_name
+            FROM user_product up
+                JOIN product p ON up.product_id = p.product_id
+            ORDER BY p.name DESC
+            """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -127,6 +135,7 @@ public class user_productDaoImpl implements user_productDao {
                         .start_date(rs.getDate("start_date").toLocalDate())
                         .end_date(rs.getDate("end_date").toLocalDate())
                         .status(rs.getString("status"))
+                        .product_name(rs.getString("product_name"))
                         .build();
                 list.add(up);
             }
@@ -140,7 +149,12 @@ public class user_productDaoImpl implements user_productDao {
     @Override
     public List<user_productVO> findAllOrderByEndDateAsc() {
         List<user_productVO> list = new ArrayList<>();
-        String sql = "SELECT * FROM user_product ORDER BY end_date ASC";
+        String sql = """
+        SELECT up.*, p.name AS product_name
+        FROM user_product up
+            JOIN product p ON up.product_id = p.product_id
+        ORDER BY up.end_date ASC
+    """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -151,6 +165,7 @@ public class user_productDaoImpl implements user_productDao {
                         .start_date(rs.getDate("start_date").toLocalDate())
                         .end_date(rs.getDate("end_date").toLocalDate())
                         .status(rs.getString("status"))
+                        .product_name(rs.getString("product_name"))
                         .build();
                 list.add(up);
             }
@@ -164,7 +179,12 @@ public class user_productDaoImpl implements user_productDao {
     @Override
     public List<user_productVO> findAllOrderByEndDateDesc() {
         List<user_productVO> list = new ArrayList<>();
-        String sql = "SELECT * FROM user_product ORDER BY end_date DESC";
+        String sql = """
+        SELECT up.*, p.name AS product_name
+        FROM user_product up
+            JOIN product p ON up.product_id = p.product_id
+        ORDER BY up.end_date DESC
+    """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -175,12 +195,58 @@ public class user_productDaoImpl implements user_productDao {
                         .start_date(rs.getDate("start_date").toLocalDate())
                         .end_date(rs.getDate("end_date").toLocalDate())
                         .status(rs.getString("status"))
+                        .product_name(rs.getString("product_name"))
                         .build();
                 list.add(up);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return list;
+    }
+
+    // Join 사용. product_name 포함하는 결과
+    @Override
+    public List<user_productVO> findJoinedProductByUserId(int userId) {
+        String sql = """
+        SELECT 
+            up.user_product_id,
+            up.user_id,
+            up.product_id,
+            up.start_date,
+            up.end_date,
+            up.status,
+            p.name AS product_name
+        FROM user_product up
+        JOIN product p ON up.product_id = p.product_id
+        WHERE up.user_id = ?
+    """;
+        List<user_productVO> list = new ArrayList<>();
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                user_productVO vo = user_productVO.builder()
+                        .user_product_id(rs.getInt("user_product_id"))
+                        .user_id(rs.getInt("user_id"))
+                        .product_id(rs.getInt("product_id"))
+                        .start_date(rs.getDate("start_date").toLocalDate())
+                        .end_date(rs.getDate("end_date").toLocalDate())
+                        .status(rs.getString("status"))
+                        .product_name(rs.getString("product_name")) // 추가
+                        .build();
+
+                list.add(vo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return list;
     }
 

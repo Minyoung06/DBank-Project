@@ -1,5 +1,6 @@
 USE DBank;
 
+DROP TABLE IF EXISTS user_product;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS product;
@@ -55,4 +56,58 @@ INSERT INTO product (product_id, name, type, duration_month, interest_rate) VALU
     (9, '정기예금 1년', '정기예금', 12, 3.10),
     (10, '자유적금 우대', '자유적금', 18, 3.40);
 
+CREATE TABLE user_product (
+    user_product_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status ENUM('가입', '해지') NOT NULL DEFAULT '가입',
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+INSERT INTO user_product ( user_id, product_id, start_date, end_date, status)
+VALUES
+    (1, 3, '2024-05-01', '2025-05-01', '가입'),
+    (2, 1, '2024-01-01', '2024-12-31', '가입');
+
+
+
+
+
+SELECT * FROM account;
 SELECT * FROM product;
+SELECT * FROM user_product;
+
+SELECT up.*, p.name AS product_name
+FROM user_product up
+         JOIN product p ON up.product_id = p.product_id
+ORDER BY p.name ASC;
+
+SELECT up.*, p.name AS product_name
+FROM user_product up
+         JOIN product p ON up.product_id = p.product_id
+ORDER BY p.name DESC;
+
+SELECT up.*, p.name AS product_name
+FROM user_product up
+         JOIN product p ON up.product_id = p.product_id
+ORDER BY up.end_date ASC;
+
+SELECT up.*, p.name AS product_name
+FROM user_product up
+         JOIN product p ON up.product_id = p.product_id
+ORDER BY up.end_date DESC;
+
+SELECT
+    up.user_product_id,
+    up.user_id,
+    up.product_id,
+    up.start_date,
+    up.end_date,
+    up.status,
+    p.name AS product_name
+FROM user_product up
+         JOIN product p ON up.product_id = p.product_id
+WHERE up.user_id = 1;

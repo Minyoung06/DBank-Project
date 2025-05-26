@@ -1,15 +1,26 @@
 package Transaction.dao;
 
 import Transaction.domain.TransactionVO;
+import account.dao.AccountDaoImpl;
+import account.domain.AccountVO;
 import database.JDBCUtil;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class TransactionDaoImpl implements TransactionDao {
-    Connection conn = JDBCUtil.getConnection();
+    private final AccountDaoImpl accountDao;
+    private final Connection conn;
+
+    // AccountDaoImpl 주입
+    public TransactionDaoImpl(AccountDaoImpl accountDao) {
+        this.accountDao = accountDao;
+        this.conn = JDBCUtil.getConnection();
+    }
+
     private TransactionVO map(ResultSet rs) throws SQLException {
         TransactionVO Transaction = new TransactionVO();
         Transaction.setTransaction_id(rs.getInt("Transaction_id"));
@@ -71,31 +82,57 @@ public class TransactionDaoImpl implements TransactionDao {
     }
 
     @Override
-    public void insert(TransactionVO transaction) {
-        String sql = ""
-                + "INSERT INTO transaction "
-                + "(send_account_id, reciver_account_id, amount, memo, timestamp)"
-                + "VALUES (?, ?, ?, ?, NOW())";
-        try (PreparedStatement pstmt =
-                     conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            // 보내는 계좌
-            pstmt.setInt(1, transaction.getSend_account_id());
-            //받는 계좌
-            pstmt.setInt(2, transaction.getReciver_account_id());
-            pstmt.setBigDecimal(3, transaction.getAmount());
-            pstmt.setString(4, transaction.getMemo());
+    public void insert(TransactionVO transaction) throws SQLException {
+        try {
+            conn.setAutoCommit(false);
 
-            int affected = pstmt.executeUpdate();
-            // 자동 생성된 PK를 VO에 담아두기
-            if (affected > 0) {
-                try (ResultSet keys = pstmt.getGeneratedKeys()) {
-                    if (keys.next()) {
-                        transaction.setTransaction_id(keys.getInt(1));
+            // 2) 보내는 사람 계좌 차감
+            AccountVO fromAcc = accountDao.getAccountById(conn, transaction.getSend_account_id());
+            double fromNew = fromAcc.getBalance() - transaction.getAmount().doubleValue();
+            int affected1 = accountDao.updateBalance(conn, transaction.getSend_account_id(), fromNew);
+            if (affected1 != 1) {
+                throw new SQLException("출금 실패: 계좌 " + transaction.getSend_account_id());
+            }
+
+
+            // 3) 받는 사람 계좌 입금
+            AccountVO toAcc = accountDao.getAccountById(conn, transaction.getReciver_account_id());
+            double toNew = toAcc.getBalance() + transaction.getAmount().doubleValue();
+            int affected2 = accountDao.updateBalance(conn, transaction.getReciver_account_id(), toNew);
+            if (affected2 != 1) {
+                throw new SQLException("입금 실패: 계좌 " + transaction.getReciver_account_id());
+            }
+
+
+            String sql = ""
+                    + "INSERT INTO transaction "
+                    + "(send_account_id, reciver_account_id, amount, memo, timestamp)"
+                    + "VALUES (?, ?, ?, ?, NOW())";
+            try (PreparedStatement pstmt =
+                         conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                // 보내는 계좌
+                pstmt.setInt(1, transaction.getSend_account_id());
+                //받는 계좌
+                pstmt.setInt(2, transaction.getReciver_account_id());
+                pstmt.setBigDecimal(3, transaction.getAmount());
+                pstmt.setString(4, transaction.getMemo());
+
+                int affected = pstmt.executeUpdate();
+                // 자동 생성된 PK를 VO에 담아두기
+                if (affected > 0) {
+                    try (ResultSet keys = pstmt.getGeneratedKeys()) {
+                        if (keys.next()) {
+                            transaction.setTransaction_id(keys.getInt(1));
+                        }
                     }
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            conn.commit();
+        }catch (SQLException e){
+            conn.rollback();
+            throw e;
+        }finally {
+            conn.setAutoCommit(true);
         }
     }
 
