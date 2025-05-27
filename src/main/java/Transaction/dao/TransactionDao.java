@@ -13,4 +13,8 @@ public interface TransactionDao {
     void insert(TransactionVO transaction) throws SQLException;
     void update(TransactionVO transaction);
     void delete(int id);
+
+    // 로그인한 유저의 거래내역 조회
+    List<TransactionVO> getByUserId(int userId);
+
 }

@@ -168,4 +168,29 @@ public class TransactionDaoImpl implements TransactionDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<TransactionVO> getByUserId(int userId) {
+        String sql = """
+        SELECT t.* 
+        FROM transaction t
+        JOIN account a ON t.send_account_id = a.account_id OR t.reciver_account_id = a.account_id
+        WHERE a.user_id = ?
+        ORDER BY t.timestamp DESC
+        """;
+
+        List<TransactionVO> list = new ArrayList<>();
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(map(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }
