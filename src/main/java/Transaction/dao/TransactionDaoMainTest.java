@@ -1,14 +1,15 @@
 package Transaction.dao;
 
 import Transaction.domain.TransactionVO;
+import account.dao.AccountDaoImpl;
 
 import java.util.List;
 
 public class TransactionDaoMainTest {
     public static void main(String[] args) {
-        TransactionDao dao = new TransactionDaoImpl();
+        AccountDaoImpl accountDao = new AccountDaoImpl();
+        TransactionDao dao = new TransactionDaoImpl(accountDao);
 
-        // 예: userId가 1인 사용자의 거래내역 조회 테스트
         int userId = 1;
 
         List<TransactionVO> transactions = dao.getByUserId(userId);
