@@ -1,9 +1,12 @@
 USE DBank;
 
+DROP TABLE IF EXISTS transaction;
 DROP TABLE IF EXISTS user_product;
 DROP TABLE IF EXISTS account;
-DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS user;
+
+
 
 CREATE TABLE user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -69,45 +72,32 @@ CREATE TABLE user_product (
 
 INSERT INTO user_product ( user_id, product_id, start_date, end_date, status)
 VALUES
-    (1, 3, '2024-05-01', '2025-05-01', '가입'),
-    (2, 1, '2024-01-01', '2024-12-31', '가입');
+    (1, 1, '2024-05-01', '2025-01-01', '가입'),
+    (1, 2, '2024-06-01', '2025-02-01', '가입'),
+    (1, 3, '2024-07-01', '2025-03-01', '가입'),
+    (1, 4, '2024-08-01', '2025-04-01', '가입'),
+    (2, 1, '2024-05-01', '2025-05-01', '가입'),
+    (2, 2, '2024-01-01', '2024-12-31', '가입'),
+    (3, 1, '2024-05-01', '2025-05-01', '가입');
 
-
+CREATE TABLE transaction(
+                            transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+                            send_account_id INT NOT NULL,
+                            reciver_account_id INT NOT NULL,
+                            amount DECIMAL(15,2) 	NOT NULL,
+                            memo VARCHAR(100),
+                            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                            FOREIGN KEY(send_account_id) REFERENCES account(account_id) ON DELETE CASCADE,
+                            FOREIGN KEY(reciver_account_id) REFERENCES account(account_id) ON DELETE CASCADE
+);
+INSERT INTO transaction(send_account_id, reciver_account_id,amount, memo, timestamp)
+VALUES ('1', '2', 350000.00, '월급 이체', NOW());
+INSERT INTO transaction(send_account_id, reciver_account_id, amount, memo, timestamp)
+VALUES (2, 1, 50000.00, '용돈', NOW());
+SELECT * FROM transaction;
 
 
 
 SELECT * FROM account;
 SELECT * FROM product;
 SELECT * FROM user_product;
-
-SELECT up.*, p.name AS product_name
-FROM user_product up
-         JOIN product p ON up.product_id = p.product_id
-ORDER BY p.name ASC;
-
-SELECT up.*, p.name AS product_name
-FROM user_product up
-         JOIN product p ON up.product_id = p.product_id
-ORDER BY p.name DESC;
-
-SELECT up.*, p.name AS product_name
-FROM user_product up
-         JOIN product p ON up.product_id = p.product_id
-ORDER BY up.end_date ASC;
-
-SELECT up.*, p.name AS product_name
-FROM user_product up
-         JOIN product p ON up.product_id = p.product_id
-ORDER BY up.end_date DESC;
-
-SELECT
-    up.user_product_id,
-    up.user_id,
-    up.product_id,
-    up.start_date,
-    up.end_date,
-    up.status,
-    p.name AS product_name
-FROM user_product up
-         JOIN product p ON up.product_id = p.product_id
-WHERE up.user_id = 1;
