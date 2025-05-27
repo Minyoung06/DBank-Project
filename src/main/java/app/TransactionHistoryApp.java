@@ -12,11 +12,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-public class TransactionApp {
+public class TransactionHistoryApp {
     private final TransactionService service;
     private final Scanner scanner = new Scanner(System.in);
 
-    public TransactionApp(TransactionService service) {
+    public TransactionHistoryApp(TransactionService service) {
         this.service = service;
     }
 
@@ -197,7 +197,7 @@ public class TransactionApp {
         TransactionDao transactionDao = new TransactionDaoImpl(accountDao);
         TransactionService service = new TransactionServiceImpl(transactionDao);
 
-        TransactionApp app = new TransactionApp(service);
+        TransactionHistoryApp app = new TransactionHistoryApp(service);
         app.run(1);
     }
 }

@@ -87,15 +87,18 @@ public class user_productDaoImpl implements user_productDao {
 
     // 5. 상품명 오름차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByProductNameAsc() {
+    public List<user_productVO> findAllOrderByProductNameAsc(int userId) {
         List<user_productVO> list = new ArrayList<>();
         String sql = """
             SELECT up.*, p.name AS product_name
             FROM user_product up
                 JOIN product p ON up.product_id = p.product_id
+            WHERE up.user_id = ?
             ORDER BY p.name ASC
             """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 user_productVO up = user_productVO.builder()
@@ -117,15 +120,18 @@ public class user_productDaoImpl implements user_productDao {
 
     // 6. 상품명 내림차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByProductNameDesc() {
+    public List<user_productVO> findAllOrderByProductNameDesc(int userId) {
         List<user_productVO> list = new ArrayList<>();
         String sql = """
             SELECT up.*, p.name AS product_name
             FROM user_product up
                 JOIN product p ON up.product_id = p.product_id
+            WHERE up.user_id = ?
             ORDER BY p.name DESC
             """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 user_productVO up = user_productVO.builder()
@@ -147,15 +153,18 @@ public class user_productDaoImpl implements user_productDao {
 
     // 7. 만기일 오름차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByEndDateAsc() {
+    public List<user_productVO> findAllOrderByEndDateAsc(int userId) {
         List<user_productVO> list = new ArrayList<>();
         String sql = """
         SELECT up.*, p.name AS product_name
         FROM user_product up
             JOIN product p ON up.product_id = p.product_id
+        WHERE up.user_id = ?
         ORDER BY up.end_date ASC
     """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 user_productVO up = user_productVO.builder()
@@ -177,15 +186,18 @@ public class user_productDaoImpl implements user_productDao {
 
     // 8. 만기일 내림차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByEndDateDesc() {
+    public List<user_productVO> findAllOrderByEndDateDesc(int userId) {
         List<user_productVO> list = new ArrayList<>();
         String sql = """
         SELECT up.*, p.name AS product_name
         FROM user_product up
             JOIN product p ON up.product_id = p.product_id
+        WHERE up.user_id = ?
         ORDER BY up.end_date DESC
     """;
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 user_productVO up = user_productVO.builder()
