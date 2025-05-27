@@ -19,16 +19,16 @@ public interface user_productDao {
     List<user_productVO> findByUserId(int userId);
 
     // 5. 상품명 오름차순 정렬
-    List<user_productVO> findAllOrderByProductNameAsc();
+    List<user_productVO> findAllOrderByProductNameAsc(int userId);
 
     // 6. 상품명 내림차순 정렬
-    List<user_productVO> findAllOrderByProductNameDesc();
+    List<user_productVO> findAllOrderByProductNameDesc(int userId);
 
     // 7. 만기일 오름차순 정렬
-    List<user_productVO> findAllOrderByEndDateAsc();
+    List<user_productVO> findAllOrderByEndDateAsc(int userId);
 
     // 8. 만기일 내림차순 정렬
-    List<user_productVO> findAllOrderByEndDateDesc();
+    List<user_productVO> findAllOrderByEndDateDesc(int userId);
 
     // user가 가입한 상품들 조회
     List<user_productVO> findJoinedProductByUserId(int userId);
