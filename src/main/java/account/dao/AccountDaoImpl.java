@@ -60,6 +60,49 @@ public class AccountDaoImpl implements AccountDao {
         return 0;
     }
 
+    @Override
+    public int insertAccount(AccountVO account, Connection conn) {
+        // 중복 계좌 여부 확인
+        String checkSql = "SELECT account_id FROM account WHERE user_id = ?";
+        String insertSql = "INSERT INTO account (user_id, balance, account_number) VALUES (?, ?, ?)";
+
+
+        try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+
+            checkStmt.setInt(1, account.getUserId());
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("❗ 사용자에게 이미 계좌가 존재합니다. account_id: " + rs.getInt("account_id"));
+                return -1; // 계좌 중복
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        //생성
+
+        String accountNumber = generateAccountNumber(account.getUserId()); // 내부 생성
+
+        try (PreparedStatement pstmt = conn.prepareStatement(insertSql,Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setInt(1, account.getUserId());
+            pstmt.setDouble(2, account.getBalance());
+            pstmt.setString(3, accountNumber);
+            pstmt.executeUpdate();
+            try(ResultSet rs = pstmt.getGeneratedKeys()){
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
+                throw new SQLException("account_id 생성 실패");
+            }
+        } catch (SQLException e) {
+            System.err.println("계좌 등록 실패: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     private String generateAccountNumber(int userId) {
         String datePart = new SimpleDateFormat("yyMMdd").format(new Date());
         String userPart = String.valueOf(userId);
@@ -158,6 +201,18 @@ public class AccountDaoImpl implements AccountDao {
 
         return 0; // 실패 시 0 반환
     }
+
+//    @Override
+//    public void updateUserId(int accountId, int userId, Connection conn) {
+//        String sql = "UPDATE account SET user_id = ? WHERE account_id = ?";
+//        try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            pstmt.setInt(1, userId);
+//            pstmt.setInt(2,accountId);
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Override
     public int deleteAccount(int accountId) {
