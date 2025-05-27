@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class TransactionVO {
     private Integer transaction_id;
     private Integer send_account_id;
-    private Integer reciver_account_id;
+    private Integer receiver_account_id;
     private BigDecimal amount;
     private String memo;
     private LocalDateTime timestamp;

@@ -1,5 +1,7 @@
-package transaction.dao;
+package transaction;
 
+import transaction.dao.TransactionDao;
+import transaction.dao.TransactionDaoImpl;
 import transaction.domain.TransactionVO;
 import account.dao.AccountDaoImpl;
 
@@ -20,7 +22,7 @@ public class TransactionDaoMainTest {
                 System.out.println("거래 ID: " + tx.getTransaction_id());
                 System.out.println("거래 종류: " + tx.getTransactionType());
                 System.out.println("보낸 계좌 ID: " + tx.getSend_account_id());
-                System.out.println("받은 계좌 ID: " + tx.getReciver_account_id());
+                System.out.println("받은 계좌 ID: " + tx.getReceiver_account_id());
                 System.out.println("거래 금액: " + tx.getAmount());
                 System.out.println("메모: " + tx.getMemo());
                 System.out.println("거래 시간: " + tx.getTimestamp());
