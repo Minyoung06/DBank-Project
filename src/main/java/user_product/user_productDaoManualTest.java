@@ -63,7 +63,7 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         // findAllOrderByProductNameAsc test
-        List<user_productVO> sortedList = dao.findAllOrderByProductNameAsc();
+        List<user_productVO> sortedList = dao.findAllOrderByProductNameAsc(userId);
 
         System.out.println("상품명 오름차순 정렬 결과:");
         if (sortedList.isEmpty()) {
@@ -80,7 +80,7 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         //findAllOrderByProductNameDesc test
-        List<user_productVO> descList = dao.findAllOrderByProductNameDesc();
+        List<user_productVO> descList = dao.findAllOrderByProductNameDesc(userId);
 
         System.out.println("상품명 내림차순 정렬 결과:");
         if (descList.isEmpty()) {
@@ -97,7 +97,7 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         //findAllOrderByEndDateAsc test
-        List<user_productVO> dateList = dao.findAllOrderByEndDateAsc();
+        List<user_productVO> dateList = dao.findAllOrderByEndDateAsc(userId);
 
         System.out.println("만기일 오름차순 정렬 결과:");
         for (user_productVO up : dateList) {
@@ -109,7 +109,7 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         // findAllOrderByEndDateDesc test
-        List<user_productVO> dateDescList = dao.findAllOrderByEndDateDesc();
+        List<user_productVO> dateDescList = dao.findAllOrderByEndDateDesc(userId);
 
         System.out.println("만기일 내림차순 정렬 결과:");
         for (user_productVO up : dateDescList) {
