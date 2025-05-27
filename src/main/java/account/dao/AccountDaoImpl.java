@@ -194,4 +194,19 @@ public class AccountDaoImpl implements AccountDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public AccountVO getAccountByNumber(String accountNumber) throws SQLException {
+        String sql = "SELECT * FROM account WHERE account_number = ?";
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, accountNumber);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return buildAccount(rs);
+                }
+                return null;
+            }
+        }
+    }
 }

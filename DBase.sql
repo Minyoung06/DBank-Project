@@ -1,9 +1,12 @@
 USE DBank;
 
+DROP TABLE IF EXISTS transaction;
 DROP TABLE IF EXISTS user_product;
 DROP TABLE IF EXISTS account;
-DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS user;
+
+
 
 CREATE TABLE user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -76,6 +79,24 @@ VALUES
     (2, 1, '2024-05-01', '2025-05-01', '가입'),
     (2, 2, '2024-01-01', '2024-12-31', '가입'),
     (3, 1, '2024-05-01', '2025-05-01', '가입');
+
+CREATE TABLE transaction(
+                            transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+                            send_account_id INT NOT NULL,
+                            reciver_account_id INT NOT NULL,
+                            amount DECIMAL(15,2) 	NOT NULL,
+                            memo VARCHAR(100),
+                            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                            FOREIGN KEY(send_account_id) REFERENCES account(account_id) ON DELETE CASCADE,
+                            FOREIGN KEY(reciver_account_id) REFERENCES account(account_id) ON DELETE CASCADE
+);
+INSERT INTO transaction(send_account_id, reciver_account_id,amount, memo, timestamp)
+VALUES ('1', '2', 350000.00, '월급 이체', NOW());
+INSERT INTO transaction(send_account_id, reciver_account_id, amount, memo, timestamp)
+VALUES (2, 1, 50000.00, '용돈', NOW());
+SELECT * FROM transaction;
+
+
 
 SELECT * FROM account;
 SELECT * FROM product;
