@@ -2,6 +2,7 @@ package app.user;
 
 import account.dao.AccountDao;
 import account.dao.AccountDaoImpl;
+import account.domain.AccountVO;
 import common.Session;
 import service.user.UserService;
 
@@ -102,9 +103,10 @@ public class UserApp {
 
     private void showUserMenu() {
         while (Session.isLoggedIn()) {
-            AccountDao accountDao = new AccountDaoImpl();
+            AccountVO loginAccount = userService.getAccountByUserId(Session.getUser().getUserId());
             System.out.println("\n===4. 로그인 성공===");
-            System.out.println(accountDao.getAccountByUserId(Session.getUser().getUserId()).getAccountNumber() + " (계좌)");
+            System.out.println(loginAccount.getAccountNumber()+ " (계좌)");
+            System.out.println("현재 잔액: "+loginAccount.getBalance()+"원");
             System.out.println("1. 계좌 상세 조회 및 거래 내역");
             System.out.println("2. 계좌 이체");
             System.out.println("3. 금융 상품 가입");

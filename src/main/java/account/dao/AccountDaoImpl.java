@@ -80,15 +80,13 @@ public class AccountDaoImpl implements AccountDao {
             e.printStackTrace();
             return -1;
         }
+
         //생성
-
-        String accountNumber = generateAccountNumber(account.getUserId()); // 내부 생성
-
         try (PreparedStatement pstmt = conn.prepareStatement(insertSql,Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setInt(1, account.getUserId());
             pstmt.setDouble(2, account.getBalance());
-            pstmt.setString(3, accountNumber);
+            pstmt.setString(3, account.getAccountNumber());
             pstmt.executeUpdate();
             try(ResultSet rs = pstmt.getGeneratedKeys()){
                 if(rs.next()){
@@ -121,7 +119,7 @@ public class AccountDaoImpl implements AccountDao {
         return accountNumber;
     }
 
-    private boolean isAccountNumberExists(String accountNumber) {
+    public boolean isAccountNumberExists(String accountNumber) {
         String sql = "SELECT COUNT(*) FROM account WHERE account_number = ?";
         try (Connection conn = JDBCUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

@@ -12,7 +12,7 @@ public interface AccountDao {
     AccountVO getAccountByUserId(int userId); // 유저 ID로 조회
     boolean verifyReceiver(String accountNumber, String receiverName);
     AccountVO getAccountById(Connection conn, int accountId);    // 계좌 ID로 조회
-
+    boolean isAccountNumberExists(String accountNumber);
     int updateBalance(Connection conn, int accountId, double balance);
     //    void updateUserId(int accountId, int userId, Connection conn);
     AccountVO getAccountByNumber(String accountNumber) throws SQLException;

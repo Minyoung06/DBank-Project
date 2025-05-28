@@ -24,6 +24,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean register(String name, String loginId, String password, String phone, String address, String ssn) {
         Connection conn = null;
+        //계좌 생성 - 중복이면 다시 생성
+        String accountNumber;
+        do {
+            accountNumber = AccountUtil.generateAccountNumber();
+        } while (accountDao.isAccountNumberExists(accountNumber));
+
         try {
             conn = JDBCUtil.getConnection();
             conn.setAutoCommit(false);
@@ -43,7 +49,6 @@ public class UserServiceImpl implements UserService {
             }
 
 
-            String accountNumber = AccountUtil.generateAccountNumber();
             AccountVO account = AccountVO.builder()
                     .balance(0.0)
                     .userId(savedUserId)
@@ -84,5 +89,10 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public AccountVO getAccountByUserId(int userId) {
+        return accountDao.getAccountByUserId(userId);
     }
 }
