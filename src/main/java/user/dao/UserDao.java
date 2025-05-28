@@ -14,5 +14,5 @@ public interface UserDao {
     UserVO login(String loginId, String password);
     boolean existsByLoginId(String loginId);
     boolean isLoginIdDuplicated(String loginId, Connection conn);
-
+    boolean isSsnDuplicated(String Ssn, Connection conn);
 }

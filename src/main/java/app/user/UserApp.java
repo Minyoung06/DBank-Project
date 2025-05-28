@@ -44,10 +44,10 @@ public class UserApp {
 
     private void register() {
         System.out.println("\n===2. 회원가입===");
-        String name = input("이름: ");
         boolean success = false;
 
         while(!success) {
+            String name = input("이름: ");
             String loginId = validatedInput(
                     "로그인 ID:",
                     INVALID_LOGIN_ID,
