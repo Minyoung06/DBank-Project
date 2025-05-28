@@ -17,6 +17,9 @@ public class UserDaoImpl implements UserDao{
         if (isLoginIdDuplicated(user.getLoginId(), conn)) {
             return -1;
         }
+        if(isSsnDuplicated(user.getSsn(), conn)){
+            return -2;
+        }
 
         String sql = "INSERT INTO user (login_id, password, name, phone, address, ssn) VALUES (?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -134,6 +137,24 @@ public class UserDaoImpl implements UserDao{
         }
     }
 
+
+
+    @Override
+    public boolean isSsnDuplicated(String Ssn, Connection conn) {
+        String sql = "SELECT COUNT(*) FROM user WHERE ssn = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, Ssn);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
     @Override
     public boolean isLoginIdDuplicated(String loginId, Connection conn) {
         String sql = "SELECT COUNT(*) FROM user WHERE login_id = ?";
@@ -149,8 +170,6 @@ public class UserDaoImpl implements UserDao{
         }
         return false;
     }
-
-
     private UserVO map(ResultSet rs) throws SQLException {
         return UserVO.builder()
                 .userId(rs.getInt("user_id"))

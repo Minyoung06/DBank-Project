@@ -47,6 +47,10 @@ public class UserServiceImpl implements UserService {
                 System.out.println("이미 사용 중인 로그인 ID입니다.");
                 return false;
             }
+            if (savedUserId == -2) {
+                System.out.println("이미 가입한 사용자입니다.");
+                return false;
+            }
 
 
             AccountVO account = AccountVO.builder()
