@@ -1,4 +1,4 @@
-package Transaction.domain;
+package transaction.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +15,13 @@ import java.time.LocalDateTime;
 public class TransactionVO {
     private Integer transaction_id;
     private Integer send_account_id;
-    private Integer reciver_account_id;
+    private Integer receiver_account_id;
     private BigDecimal amount;
     private String memo;
     private LocalDateTime timestamp;
+
+
+    private String transactionType; // 입금 or 출금
+    private String counterpartyName;
+    private String counterpartyAccountNumber;
 }

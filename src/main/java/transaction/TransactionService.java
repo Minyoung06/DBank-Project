@@ -1,7 +1,7 @@
-package Transaction;
+package transaction;
 
-import Transaction.dao.TransactionDao;
-import Transaction.domain.TransactionVO;
+import transaction.dao.TransactionDao;
+import transaction.domain.TransactionVO;
 import account.dao.AccountDao;
 import account.domain.AccountVO;
 import common.Session;
@@ -58,7 +58,7 @@ public class TransactionService {
             }
             TransactionVO transaction = TransactionVO.builder()
                     .send_account_id(fromAcc.getAccountId())
-                    .reciver_account_id(toAcc  .getAccountId())
+                    .receiver_account_id(toAcc  .getAccountId())
                     .amount            (amount)
                     .memo              (memo)
                     .build();

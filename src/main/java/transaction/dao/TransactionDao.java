@@ -1,6 +1,6 @@
-package Transaction.dao;
+package transaction.dao;
 
-import Transaction.domain.TransactionVO;
+import transaction.domain.TransactionVO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +15,7 @@ public interface TransactionDao {
     void delete(int id);
 
     // 로그인한 유저의 거래내역 조회
-    List<TransactionVO> getByUserId(int userId);
+//    List<TransactionVO> getByUserId(int userId);
+    List<TransactionVO> getDetailedByUserId(int userId);
 
 }
