@@ -45,9 +45,9 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public UserVO findById(int userId) {
-        Connection conn = JDBCUtil.getConnection();
         String sql = "SELECT * FROM user WHERE user_id = ?";
-        try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement pstm = conn.prepareStatement(sql)) {
             pstm.setInt(1,userId);
             try (ResultSet rs = pstm.executeQuery()) {
                 if(rs.next()) return map(rs);
@@ -60,10 +60,10 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public List<UserVO> findAll() {
-        Connection conn = JDBCUtil.getConnection();
         String sql = "SELECT * FROM user ORDER BY user_id";
         List<UserVO> users = new ArrayList<>();
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             while(rs.next()){
                 users.add(map(rs));
@@ -76,9 +76,9 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void update(UserVO user) {
-        Connection conn = JDBCUtil.getConnection();
         String sql = "UPDATE user SET login_id = ?, password = ?, name = ?, phone = ?, address = ?, ssn = ? WHERE user_id = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+        try(Connection conn = JDBCUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setString(1, user.getLoginId());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getName());
@@ -95,9 +95,9 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void delete(int userId) {
-        Connection conn = JDBCUtil.getConnection();
         String sql = "DELETE FROM user WHERE user_id = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try(Connection conn = JDBCUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1,userId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -107,9 +107,9 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public UserVO login(String loginId, String password) {
-        Connection conn = JDBCUtil.getConnection();
         String sql = "SELECT * FROM user WHERE login_id = ? AND password = ?";
-        try (PreparedStatement pstmt =conn.prepareStatement(sql)){
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement pstmt =conn.prepareStatement(sql)){
             pstmt.setString(1,loginId);
             pstmt.setString(2, password);
             try(ResultSet rs = pstmt.executeQuery()){
@@ -125,9 +125,9 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public boolean existsByLoginId(String loginId) {
-        Connection conn = JDBCUtil.getConnection();
         String sql = "SELECT 1 FROM user WHERE login_id = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+        try(Connection conn = JDBCUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setString(1,loginId);
             try (ResultSet rs = pstmt.executeQuery()){
                 return rs.next();
