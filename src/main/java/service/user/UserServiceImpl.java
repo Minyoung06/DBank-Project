@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
                     .address(address)
                     .ssn(ssn)
                     .build();
+
             int savedUserId = userDao.insert(user, conn);
             if (savedUserId == -1) {
                 System.out.println("이미 사용 중인 로그인 ID입니다.");
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
             throw new RuntimeException(" 회원가입 실패", e);
-        }finally {
+        } finally {
             if (conn != null) {
                 try {
                     conn.close(); //자원 반납
