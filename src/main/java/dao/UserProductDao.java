@@ -4,9 +4,9 @@ import domain.user_productVO;
 
 import java.util.List;
 
-public interface user_productDao {
+public interface UserProductDao {
     // 1. 가입 정보 등록
-    void insert(user_productVO product);
+    int insert(user_productVO product);
 
     // 2. 가입 정보 수정 (ex. 상태 변경, 종료일 수정 등)
     void update(user_productVO product);

@@ -2,8 +2,8 @@ package service.productList;
 
 import common.Session;
 import lombok.RequiredArgsConstructor;
-import dao.user_productDao;
-import dao.user_productDaoImpl;
+import dao.UserProductDao;
+import dao.UserProductDaoImpl;
 import domain.user_productVO;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class ProductListServiceImpl implements ProductListService {
-    private final user_productDao dao = new user_productDaoImpl();
+    private final UserProductDao dao = new UserProductDaoImpl();
 
     private boolean sortByName = false; // true: 상품명, false: 만기일
     private boolean ascending = true;   // true: asc, false: desc

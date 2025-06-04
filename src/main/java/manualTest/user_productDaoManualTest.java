@@ -1,7 +1,7 @@
 package manualTest;
 
-import dao.user_productDao;
-import dao.user_productDaoImpl;
+import dao.UserProductDao;
+import dao.UserProductDaoImpl;
 import domain.user_productVO;
 
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class user_productDaoManualTest {
     public static void main(String[] args) {
-        user_productDao dao = new user_productDaoImpl();
+        UserProductDao dao = new UserProductDaoImpl();
 
         //insert test
         user_productVO newUserProduct = user_productVO.builder()

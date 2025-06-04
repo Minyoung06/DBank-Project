@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class user_productDaoImpl implements user_productDao {
+public class UserProductDaoImpl implements UserProductDao {
 
     Connection conn = JDBCUtil.getConnection();
 
     // 1. 가입 정보 등록
     @Override
-    public void insert(user_productVO product) {
+    public int insert(user_productVO product) {
         String sql = "INSERT INTO user_product (user_id, product_id, start_date, end_date, status) " +
                 "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -22,9 +22,10 @@ public class user_productDaoImpl implements user_productDao {
             pstmt.setDate(3, java.sql.Date.valueOf(product.getStart_date()));
             pstmt.setDate(4, java.sql.Date.valueOf(product.getEnd_date()));
             pstmt.setString(5, product.getStatus());
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // 예외 처리는 실제 프로젝트에선 로깅으로 대체
+            e.printStackTrace();
+            return 0;// 예외 처리는 실제 프로젝트에선 로깅으로 대체
         }
     }
 
