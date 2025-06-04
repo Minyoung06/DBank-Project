@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import service.productList.ProductListService;
 import service.productList.ProductListServiceImpl;
 import domain.UserVO;
-import domain.user_productVO;
+import domain.UserProductVO;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,13 +22,13 @@ public class ProductListApp {
         }
         while(true){
             System.out.println("\n=== 내 금융 상품 목록 ===");
-            List<user_productVO> productList = service.getSortedProductList();
+            List<UserProductVO> productList = service.getSortedProductList();
 
             if(productList.isEmpty()){
                 System.out.println("가입한 상품이 없습니다.");
             }
             else {
-                for(user_productVO productVO : productList){
+                for(UserProductVO productVO : productList){
                     System.out.printf("- %s / 가입일: %s / 만기: %s\n",
                             productVO.getProduct_name(),
                             productVO.getStart_date(),

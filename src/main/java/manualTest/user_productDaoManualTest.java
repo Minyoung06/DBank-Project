@@ -2,7 +2,7 @@ package manualTest;
 
 import dao.UserProductDao;
 import dao.UserProductDaoImpl;
-import domain.user_productVO;
+import domain.UserProductVO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +12,7 @@ public class user_productDaoManualTest {
         UserProductDao dao = new UserProductDaoImpl();
 
         //insert test
-        user_productVO newUserProduct = user_productVO.builder()
+        UserProductVO newUserProduct = UserProductVO.builder()
                 .user_id(1)
                 .product_id(2)
                 .start_date(LocalDate.now())
@@ -25,7 +25,7 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         //update test
-        user_productVO vo = user_productVO.builder()
+        UserProductVO vo = UserProductVO.builder()
                 .user_product_id(1)
                 .user_id(1)
                 .product_id(2)
@@ -45,13 +45,13 @@ public class user_productDaoManualTest {
 
         //findByUserId test
         int userId = 1;
-        List<user_productVO> list = dao.findByUserId(userId);
+        List<UserProductVO> list = dao.findByUserId(userId);
 
         System.out.println("가입 상품 조회 결과:");
         if (list.isEmpty()) {
             System.out.println("해당 유저의 가입 내역이 없습니다.");
         } else {
-            for (user_productVO up : list) {
+            for (UserProductVO up : list) {
                 System.out.printf("가입번호: %d | 상품ID: %d | 시작일: %s | 만기일: %s | 상태: %s\n",
                         up.getUser_product_id(),
                         up.getProduct_id(),
@@ -63,13 +63,13 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         // findAllOrderByProductNameAsc test
-        List<user_productVO> sortedList = dao.findAllOrderByProductNameAsc(userId);
+        List<UserProductVO> sortedList = dao.findAllOrderByProductNameAsc(userId);
 
         System.out.println("상품명 오름차순 정렬 결과:");
         if (sortedList.isEmpty()) {
             System.out.println("조회 결과가 없습니다.");
         } else {
-            for (user_productVO up : sortedList) {
+            for (UserProductVO up : sortedList) {
                 System.out.printf("상품명: %s | 가입일: %s | 만기일: %s | 상태: %s\n",
                         up.getProduct_name(),
                         up.getStart_date(),
@@ -80,13 +80,13 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         //findAllOrderByProductNameDesc test
-        List<user_productVO> descList = dao.findAllOrderByProductNameDesc(userId);
+        List<UserProductVO> descList = dao.findAllOrderByProductNameDesc(userId);
 
         System.out.println("상품명 내림차순 정렬 결과:");
         if (descList.isEmpty()) {
             System.out.println("조회 결과가 없습니다.");
         } else {
-            for (user_productVO up : descList) {
+            for (UserProductVO up : descList) {
                 System.out.printf("상품명: %s | 가입일: %s | 만기일: %s | 상태: %s\n",
                         up.getProduct_name(),
                         up.getStart_date(),
@@ -97,10 +97,10 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         //findAllOrderByEndDateAsc test
-        List<user_productVO> dateList = dao.findAllOrderByEndDateAsc(userId);
+        List<UserProductVO> dateList = dao.findAllOrderByEndDateAsc(userId);
 
         System.out.println("만기일 오름차순 정렬 결과:");
-        for (user_productVO up : dateList) {
+        for (UserProductVO up : dateList) {
             System.out.printf("상품명: %s | 만기일: %s | 상태: %s\n",
                     up.getProduct_name(),
                     up.getEnd_date(),
@@ -109,10 +109,10 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         // findAllOrderByEndDateDesc test
-        List<user_productVO> dateDescList = dao.findAllOrderByEndDateDesc(userId);
+        List<UserProductVO> dateDescList = dao.findAllOrderByEndDateDesc(userId);
 
         System.out.println("만기일 내림차순 정렬 결과:");
-        for (user_productVO up : dateDescList) {
+        for (UserProductVO up : dateDescList) {
             System.out.printf("상품명: %s | 만기일: %s | 상태: %s\n",
                     up.getProduct_name(),
                     up.getEnd_date(),
@@ -121,10 +121,10 @@ public class user_productDaoManualTest {
         System.out.println("======================================");
 
         // findJoinedProductByUserId test, id:1
-        List<user_productVO> joinedList = dao.findJoinedProductByUserId(1);
+        List<UserProductVO> joinedList = dao.findJoinedProductByUserId(1);
 
         System.out.println("가입한 상품 목록:");
-        for (user_productVO up : joinedList) {
+        for (UserProductVO up : joinedList) {
             System.out.printf("상품명: %s | 가입일: %s | 만기일: %s | 상태: %s\n",
                     up.getProduct_name(),
                     up.getStart_date(),

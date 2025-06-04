@@ -4,7 +4,7 @@ import common.Session;
 import lombok.RequiredArgsConstructor;
 import dao.UserProductDao;
 import dao.UserProductDaoImpl;
-import domain.user_productVO;
+import domain.UserProductVO;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class ProductListServiceImpl implements ProductListService {
 
 
     @Override
-    public List<user_productVO> getSortedProductList() {
+    public List<UserProductVO> getSortedProductList() {
         int userId = Session.getUserId();
         if (userId == -1) return List.of();
 

@@ -6,7 +6,7 @@ import dao.UserProductDao;
 import dao.UserProductDaoImpl;
 import domain.ProductVO;
 import common.Session;
-import domain.user_productVO;
+import domain.UserProductVO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -44,7 +44,7 @@ public class ProductJoinServiceImpl implements ProductJoinService {
             return;
         }
 
-        user_productVO userProduct = new user_productVO();
+        UserProductVO userProduct = new UserProductVO();
         userProduct.setUser_id(Session.getUserId());
         userProduct.setProduct_id(product.getProductId());
 

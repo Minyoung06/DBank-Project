@@ -1,7 +1,7 @@
 package dao;
 
 import database.JDBCUtil;
-import domain.user_productVO;
+import domain.UserProductVO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // 1. 가입 정보 등록
     @Override
-    public int insert(user_productVO product) {
+    public int insert(UserProductVO product) {
         String sql = "INSERT INTO user_product (user_id, product_id, start_date, end_date, status) " +
                 "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // 2. 가입 정보 수정 (상태 or 종료일 수정 등)
     @Override
-    public void update(user_productVO product) {
+    public void update(UserProductVO product) {
         String sql = "UPDATE user_product SET user_id = ?, product_id = ?, start_date = ?, end_date = ?, status = ? " +
                 "WHERE user_product_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -62,14 +62,14 @@ public class UserProductDaoImpl implements UserProductDao {
     // 4. 특정 유저가 가입한 모든 상품 조회
     // JOIN 없이 user_product 단독 조회
     @Override
-    public List<user_productVO> findByUserId(int userId) {
-        List<user_productVO> list = new ArrayList<>();
+    public List<UserProductVO> findByUserId(int userId) {
+        List<UserProductVO> list = new ArrayList<>();
         String sql = "SELECT * FROM user_product WHERE user_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                user_productVO up = user_productVO.builder()
+                UserProductVO up = UserProductVO.builder()
                         .user_product_id(rs.getInt("user_product_id"))
                         .user_id(rs.getInt("user_id"))
                         .product_id(rs.getInt("product_id"))
@@ -87,8 +87,8 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // 5. 상품명 오름차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByProductNameAsc(int userId) {
-        List<user_productVO> list = new ArrayList<>();
+    public List<UserProductVO> findAllOrderByProductNameAsc(int userId) {
+        List<UserProductVO> list = new ArrayList<>();
         String sql = """
             SELECT up.*, p.name AS product_name
             FROM user_product up
@@ -101,7 +101,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                user_productVO up = user_productVO.builder()
+                UserProductVO up = UserProductVO.builder()
                         .user_product_id(rs.getInt("user_product_id"))
                         .user_id(rs.getInt("user_id"))
                         .product_id(rs.getInt("product_id"))
@@ -120,8 +120,8 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // 6. 상품명 내림차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByProductNameDesc(int userId) {
-        List<user_productVO> list = new ArrayList<>();
+    public List<UserProductVO> findAllOrderByProductNameDesc(int userId) {
+        List<UserProductVO> list = new ArrayList<>();
         String sql = """
             SELECT up.*, p.name AS product_name
             FROM user_product up
@@ -134,7 +134,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                user_productVO up = user_productVO.builder()
+                UserProductVO up = UserProductVO.builder()
                         .user_product_id(rs.getInt("user_product_id"))
                         .user_id(rs.getInt("user_id"))
                         .product_id(rs.getInt("product_id"))
@@ -153,8 +153,8 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // 7. 만기일 오름차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByEndDateAsc(int userId) {
-        List<user_productVO> list = new ArrayList<>();
+    public List<UserProductVO> findAllOrderByEndDateAsc(int userId) {
+        List<UserProductVO> list = new ArrayList<>();
         String sql = """
         SELECT up.*, p.name AS product_name
         FROM user_product up
@@ -167,7 +167,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                user_productVO up = user_productVO.builder()
+                UserProductVO up = UserProductVO.builder()
                         .user_product_id(rs.getInt("user_product_id"))
                         .user_id(rs.getInt("user_id"))
                         .product_id(rs.getInt("product_id"))
@@ -186,8 +186,8 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // 8. 만기일 내림차순 정렬
     @Override
-    public List<user_productVO> findAllOrderByEndDateDesc(int userId) {
-        List<user_productVO> list = new ArrayList<>();
+    public List<UserProductVO> findAllOrderByEndDateDesc(int userId) {
+        List<UserProductVO> list = new ArrayList<>();
         String sql = """
         SELECT up.*, p.name AS product_name
         FROM user_product up
@@ -200,7 +200,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                user_productVO up = user_productVO.builder()
+                UserProductVO up = UserProductVO.builder()
                         .user_product_id(rs.getInt("user_product_id"))
                         .user_id(rs.getInt("user_id"))
                         .product_id(rs.getInt("product_id"))
@@ -219,7 +219,7 @@ public class UserProductDaoImpl implements UserProductDao {
 
     // Join 사용. product_name 포함하는 결과
     @Override
-    public List<user_productVO> findJoinedProductByUserId(int userId) {
+    public List<UserProductVO> findJoinedProductByUserId(int userId) {
         String sql = """
         SELECT 
             up.user_product_id,
@@ -233,7 +233,7 @@ public class UserProductDaoImpl implements UserProductDao {
         JOIN product p ON up.product_id = p.product_id
         WHERE up.user_id = ?
     """;
-        List<user_productVO> list = new ArrayList<>();
+        List<UserProductVO> list = new ArrayList<>();
 
         try (Connection conn = JDBCUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -242,7 +242,7 @@ public class UserProductDaoImpl implements UserProductDao {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                user_productVO vo = user_productVO.builder()
+                UserProductVO vo = UserProductVO.builder()
                         .user_product_id(rs.getInt("user_product_id"))
                         .user_id(rs.getInt("user_id"))
                         .product_id(rs.getInt("product_id"))

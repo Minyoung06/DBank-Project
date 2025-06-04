@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class user_productVO {
+public class UserProductVO {
     private int user_product_id;
     private int user_id;
     private int product_id;

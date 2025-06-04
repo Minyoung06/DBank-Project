@@ -22,5 +22,5 @@ public class UserVO {
 
     // 관계 추가
 //    private int accountId;                      // 1:1 관계
-    private List<user_productVO> userProducts;       // 1:N 관계
+    private List<UserProductVO> userProducts;       // 1:N 관계
 }

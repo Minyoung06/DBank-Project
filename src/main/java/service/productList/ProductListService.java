@@ -1,11 +1,11 @@
 package service.productList;
 
-import domain.user_productVO;
+import domain.UserProductVO;
 
 import java.util.List;
 
 public interface ProductListService {
-    List<user_productVO> getSortedProductList();
+    List<UserProductVO> getSortedProductList();
     void toggleSortByName();
     void toggleSortByEndDate();
     String getCurrentSortStatus();
