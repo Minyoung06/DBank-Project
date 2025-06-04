@@ -2,9 +2,9 @@ package service.productList;
 
 import common.Session;
 import lombok.RequiredArgsConstructor;
-import user_product.dao.user_productDao;
-import user_product.dao.user_productDaoImpl;
-import user_product.domain.user_productVO;
+import dao.user_productDao;
+import dao.user_productDaoImpl;
+import domain.user_productVO;
 
 import java.util.List;
 

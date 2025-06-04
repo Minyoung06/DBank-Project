@@ -1,9 +1,9 @@
-package transaction;
+package manualTest;
 
-import transaction.dao.TransactionDao;
-import transaction.dao.TransactionDaoImpl;
-import transaction.domain.TransactionVO;
-import account.dao.AccountDaoImpl;
+import dao.TransactionDao;
+import dao.TransactionDaoImpl;
+import domain.TransactionVO;
+import dao.AccountDaoImpl;
 
 import java.util.List;
 

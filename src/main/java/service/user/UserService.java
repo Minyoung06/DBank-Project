@@ -1,7 +1,6 @@
 package service.user;
 
-import account.dao.AccountDao;
-import account.domain.AccountVO;
+import domain.AccountVO;
 
 public interface UserService {
     boolean register(String name, String loginId, String password, String phone, String address, String ssn);

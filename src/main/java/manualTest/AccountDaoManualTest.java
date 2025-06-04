@@ -1,8 +1,8 @@
-package account;
+package manualTest;
 
-import account.dao.AccountDao;
-import account.dao.AccountDaoImpl;
-import account.domain.AccountVO;
+import dao.AccountDao;
+import dao.AccountDaoImpl;
+import domain.AccountVO;
 import database.JDBCUtil;
 
 import java.sql.Connection;

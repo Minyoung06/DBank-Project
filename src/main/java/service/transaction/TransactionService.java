@@ -1,6 +1,6 @@
 package service.transaction;
 
-import transaction.domain.TransactionVO;
+import domain.TransactionVO;
 
 import java.util.List;
 

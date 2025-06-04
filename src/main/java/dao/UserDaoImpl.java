@@ -1,7 +1,7 @@
-package user.dao;
+package dao;
 
 import database.JDBCUtil;
-import user.domain.UserVO;
+import domain.UserVO;
 
 import java.sql.*;
 import java.util.ArrayList;

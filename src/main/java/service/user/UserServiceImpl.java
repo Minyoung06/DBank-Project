@@ -1,12 +1,12 @@
 package service.user;
 
-import account.dao.AccountDao;
-import account.domain.AccountVO;
+import dao.AccountDao;
+import domain.AccountVO;
 import common.Session;
 import database.JDBCUtil;
 
-import user.dao.UserDao;
-import user.domain.UserVO;
+import dao.UserDao;
+import domain.UserVO;
 import util.AccountUtil;
 
 import java.sql.Connection;

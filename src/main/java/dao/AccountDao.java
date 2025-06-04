@@ -1,10 +1,9 @@
-package account.dao;
+package dao;
 
-import account.domain.AccountVO;
+import domain.AccountVO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 public interface AccountDao {
     int insertAccount(AccountVO account);              // 계좌 등록

@@ -1,6 +1,6 @@
-package product.dao;
+package dao;
 
-import product.domain.ProductVO;
+import domain.ProductVO;
 
 import java.util.List;
 

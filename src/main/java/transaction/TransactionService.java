@@ -1,17 +1,13 @@
 package transaction;
 
-import transaction.dao.TransactionDao;
-import transaction.domain.TransactionVO;
-import account.dao.AccountDao;
-import account.domain.AccountVO;
+import dao.TransactionDao;
+import domain.TransactionVO;
+import dao.AccountDao;
+import domain.AccountVO;
 import common.Session;
-import database.JDBCUtil;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.SQLException;
-
-import static com.mysql.cj.conf.PropertyKey.logger;
 
 public class TransactionService {
     private final AccountDao accountDao;

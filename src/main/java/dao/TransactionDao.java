@@ -1,6 +1,6 @@
-package transaction.dao;
+package dao;
 
-import transaction.domain.TransactionVO;
+import domain.TransactionVO;
 
 import java.sql.SQLException;
 import java.util.List;

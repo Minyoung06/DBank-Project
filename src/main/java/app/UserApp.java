@@ -1,6 +1,6 @@
-package app.user;
+package app;
 
-import account.domain.AccountVO;
+import domain.AccountVO;
 import common.Session;
 import service.user.UserService;
 

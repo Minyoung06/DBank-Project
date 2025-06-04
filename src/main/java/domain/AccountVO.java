@@ -1,4 +1,4 @@
-package account.domain;
+package domain;
 
 import lombok.*;
 

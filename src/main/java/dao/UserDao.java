@@ -1,6 +1,6 @@
-package user.dao;
+package dao;
 
-import user.domain.UserVO;
+import domain.UserVO;
 
 import java.sql.Connection;
 import java.util.List;
