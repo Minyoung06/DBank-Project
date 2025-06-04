@@ -1,9 +1,8 @@
-package user_product.dao;
+package dao;
 
-import user_product.domain.user_productVO;
+import domain.user_productVO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface user_productDao {
     // 1. 가입 정보 등록

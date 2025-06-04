@@ -1,4 +1,4 @@
-package user_product.domain;
+package domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

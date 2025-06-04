@@ -1,19 +1,14 @@
 package app;
 
 import transaction.TransactionService;
-import transaction.dao.TransactionDao;
-import transaction.dao.TransactionDaoImpl;
-import transaction.domain.TransactionVO;
-import account.dao.AccountDao;
-import account.dao.AccountDaoImpl;
-import account.domain.AccountVO;
+import dao.TransactionDaoImpl;
+import dao.AccountDaoImpl;
 import common.Session;
-import user.dao.UserDao;
-import user.dao.UserDaoImpl;
-import user.domain.UserVO;
+import dao.UserDao;
+import dao.UserDaoImpl;
+import domain.UserVO;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Scanner;
 
 public class TransactionServiceApp {

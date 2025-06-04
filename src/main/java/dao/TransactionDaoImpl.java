@@ -1,8 +1,7 @@
-package transaction.dao;
+package dao;
 
-import transaction.domain.TransactionVO;
-import account.dao.AccountDaoImpl;
-import account.domain.AccountVO;
+import domain.TransactionVO;
+import domain.AccountVO;
 import database.JDBCUtil;
 
 import java.sql.*;

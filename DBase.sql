@@ -23,7 +23,6 @@ INSERT INTO user ( login_id, password, name,phone,address,ssn) VALUES
     ('Kim02', 'pass5678!', '김철수', '010-5678-1234', '부산시 해운대구 우동 2', '0103052345678'),
     ('Lee03', 'pw91011@', '이수지', '010-1212-3434', '대전광역시 중구 대종로480번길 15', '9812253456789');
 
-SELECT * FROM user;
 
 CREATE TABLE account(
     account_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -37,7 +36,6 @@ INSERT INTO account (user_id, balance,account_number) VALUES
     (1, 120000.00, '1101234567890'),
     (2, 500000.00, '3333012345678');
 
-SELECT * FROM account;
 
 CREATE TABLE product (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -83,21 +81,21 @@ VALUES
 CREATE TABLE transaction(
                             transaction_id INT AUTO_INCREMENT PRIMARY KEY,
                             send_account_id INT NOT NULL,
-                            reciver_account_id INT NOT NULL,
+                            receiver_account_id INT NOT NULL,
                             amount DECIMAL(15,2) 	NOT NULL,
                             memo VARCHAR(100),
                             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY(send_account_id) REFERENCES account(account_id) ON DELETE CASCADE,
-                            FOREIGN KEY(reciver_account_id) REFERENCES account(account_id) ON DELETE CASCADE
+                            FOREIGN KEY(receiver_account_id) REFERENCES account(account_id) ON DELETE CASCADE
 );
-INSERT INTO transaction(send_account_id, reciver_account_id,amount, memo, timestamp)
+INSERT INTO transaction(send_account_id, receiver_account_id,amount, memo, timestamp)
 VALUES ('1', '2', 350000.00, '월급 이체', NOW());
-INSERT INTO transaction(send_account_id, reciver_account_id, amount, memo, timestamp)
+INSERT INTO transaction(send_account_id, receiver_account_id, amount, memo, timestamp)
 VALUES (2, 1, 50000.00, '용돈', NOW());
-SELECT * FROM transaction;
 
 
-
+SELECT * FROM user;
 SELECT * FROM account;
+SELECT * FROM transaction;
 SELECT * FROM product;
 SELECT * FROM user_product;

@@ -1,8 +1,8 @@
 //package user;
 //
-//import user.dao.UserDao;
-//import user.dao.UserDaoImpl;
-//import user.domain.UserVO;
+//import dao.UserDao;
+//import dao.UserDaoImpl;
+//import domain.UserVO;
 //
 //import java.util.List;
 //

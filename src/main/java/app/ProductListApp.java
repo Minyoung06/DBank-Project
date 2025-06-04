@@ -4,8 +4,8 @@ import common.Session;
 import lombok.RequiredArgsConstructor;
 import service.productList.ProductListService;
 import service.productList.ProductListServiceImpl;
-import user.domain.UserVO;
-import user_product.domain.user_productVO;
+import domain.UserVO;
+import domain.user_productVO;
 
 import java.util.List;
 import java.util.Scanner;

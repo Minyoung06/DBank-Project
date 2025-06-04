@@ -1,12 +1,11 @@
-package user_product.dao;
+package dao;
 
 import database.JDBCUtil;
-import user_product.domain.user_productVO;
+import domain.user_productVO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class user_productDaoImpl implements user_productDao {
 

@@ -1,7 +1,7 @@
-package product.dao;
+package dao;
 
 import database.JDBCUtil;
-import product.domain.ProductVO;
+import domain.ProductVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

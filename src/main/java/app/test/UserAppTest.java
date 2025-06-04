@@ -1,9 +1,10 @@
-package app.user;
+package app.test;
 
-import account.dao.AccountDaoImpl;
+import dao.AccountDaoImpl;
+import app.UserApp;
 import service.user.UserService;
 import service.user.UserServiceImpl;
-import user.dao.UserDaoImpl;
+import dao.UserDaoImpl;
 
 public class UserAppTest {
     public static void main(String[] args) {

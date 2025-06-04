@@ -1,11 +1,9 @@
-package user.domain;
+package domain;
 
-import account.domain.AccountVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import user_product.domain.user_productVO;
 
 import java.util.List;
 

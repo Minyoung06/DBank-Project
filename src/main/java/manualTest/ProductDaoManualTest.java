@@ -1,8 +1,8 @@
-package product;
+package manualTest;
 
-import product.dao.ProductDao;
-import product.dao.ProductDaoImpl;
-import product.domain.ProductVO;
+import dao.ProductDao;
+import dao.ProductDaoImpl;
+import domain.ProductVO;
 
 import java.math.BigDecimal;
 import java.util.List;

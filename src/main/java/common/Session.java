@@ -1,6 +1,6 @@
 package common;
 
-import user.domain.UserVO;
+import domain.UserVO;
 
 public class Session {
     private static UserVO loggedInUser;
