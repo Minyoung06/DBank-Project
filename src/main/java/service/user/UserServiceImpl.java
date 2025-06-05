@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean register(String name, String loginId, String password, String phone, String address, String ssn) {
         Connection conn = null;
+
         //계좌 생성 - 중복이면 다시 생성
         String accountNumber;
         do {
@@ -77,13 +78,12 @@ public class UserServiceImpl implements UserService {
             }
             throw new RuntimeException(" 회원가입 실패", e);
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close(); //자원 반납
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+
         }
     }
     @Override
