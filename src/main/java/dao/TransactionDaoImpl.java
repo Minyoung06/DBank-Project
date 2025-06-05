@@ -80,7 +80,7 @@ public class TransactionDaoImpl implements TransactionDao {
     }
 
     @Override
-    public void insert(TransactionVO service.transaction) throws SQLException {
+    public void insert(TransactionVO transaction) throws SQLException {
         try {
             conn.setAutoCommit(false);
 
@@ -135,7 +135,7 @@ public class TransactionDaoImpl implements TransactionDao {
     }
 
     @Override
-    public void update(TransactionVO service.transaction) {
+    public void update(TransactionVO transaction) {
         String sql =
                 "UPDATE transaction "
                         + "SET send_account_id    = ?, "
