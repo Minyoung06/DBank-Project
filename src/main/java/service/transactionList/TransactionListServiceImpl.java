@@ -1,4 +1,4 @@
-package service.transaction;
+package service.transactionList;
 
 import dao.TransactionDao;
 import domain.TransactionVO;
@@ -7,11 +7,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TransactionServiceImpl implements TransactionService {
+public class TransactionListServiceImpl implements TransactionListService {
 
     private final TransactionDao transactionDao;
 
-    public TransactionServiceImpl(TransactionDao transactionDao) {
+    public TransactionListServiceImpl(TransactionDao transactionDao) {
         this.transactionDao = transactionDao;
     }
 
