@@ -16,8 +16,21 @@ public class MainApp {
     private final UserService userService;
     private final Scanner scanner;
 
-    public MainApp(UserService userService) {
+    private final ProductListApp productListApp;
+    private final ProductJoinApp productJoinApp;
+    private final TransactionServiceApp transactionServiceApp;
+    private final TransactionHistoryApp transactionHistoryApp;
+
+    public MainApp(UserService userService,
+                   ProductJoinApp productJoinApp,
+                   ProductListApp productListApp,
+                   TransactionServiceApp transactionServiceApp,
+                   TransactionHistoryApp transactionHistoryApp) {
         this.userService = userService;
+        this.productJoinApp = productJoinApp;
+        this.productListApp = productListApp;
+        this.transactionServiceApp = transactionServiceApp;
+        this.transactionHistoryApp = transactionHistoryApp;
         this.scanner = new Scanner(System.in);
     }
 
@@ -114,10 +127,10 @@ public class MainApp {
 
             String choice = input("선택: ");
             switch (choice) {
-                case "1" -> System.out.println("계좌 상세 조회 기능");
-                case "2" -> System.out.println("계좌 이체 기능");
-                case "3" -> System.out.println("금융 상품 가입 기능");
-                case "4" -> System.out.println("내 상품 목록 기능");
+                case "1" -> transactionHistoryApp.run(Session.getUser().getUserId());
+                case "2" -> transactionServiceApp.start();
+                case "3" -> productJoinApp.run();
+                case "4" -> productListApp.run();
                 case "5" -> {
                     System.out.println("로그아웃 되었습니다.");
                     Session.logout();
