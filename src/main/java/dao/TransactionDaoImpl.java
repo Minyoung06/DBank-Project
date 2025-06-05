@@ -80,7 +80,7 @@ public class TransactionDaoImpl implements TransactionDao {
     }
 
     @Override
-    public void insert(TransactionVO transaction) throws SQLException {
+    public void insert(TransactionVO service.transaction) throws SQLException {
         try {
             conn.setAutoCommit(false);
 
@@ -135,7 +135,7 @@ public class TransactionDaoImpl implements TransactionDao {
     }
 
     @Override
-    public void update(TransactionVO transaction) {
+    public void update(TransactionVO service.transaction) {
         String sql =
                 "UPDATE transaction "
                         + "SET send_account_id    = ?, "
@@ -171,7 +171,7 @@ public class TransactionDaoImpl implements TransactionDao {
 //    public List<TransactionVO> getByUserId(int userId) {
 //        String sql = """
 //        SELECT t.*
-//        FROM transaction t
+//        FROM service.transaction t
 //        JOIN account a ON t.send_account_id = a.account_id OR t.receiver_account_id = a.account_id
 //        WHERE a.user_id = ?
 //        ORDER BY t.timestamp DESC

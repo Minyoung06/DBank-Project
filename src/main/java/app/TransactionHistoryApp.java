@@ -1,8 +1,8 @@
 package app;
 
 import dao.AccountDaoImpl;
-import service.transaction.TransactionService;
-import service.transaction.TransactionServiceImpl;
+import service.transactionList.TransactionListService;
+import service.transactionList.TransactionListServiceImpl;
 import dao.TransactionDao;
 import dao.TransactionDaoImpl;
 import domain.TransactionVO;
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TransactionHistoryApp {
-    private final TransactionService service;
+    private final TransactionListService service;
     private final Scanner scanner = new Scanner(System.in);
 
-    public TransactionHistoryApp(TransactionService service) {
+    public TransactionHistoryApp(TransactionListService service) {
         this.service = service;
     }
 
@@ -195,7 +195,7 @@ public class TransactionHistoryApp {
     public static void main(String[] args) {
         AccountDaoImpl accountDao = new AccountDaoImpl();
         TransactionDao transactionDao = new TransactionDaoImpl(accountDao);
-        TransactionService service = new TransactionServiceImpl(transactionDao);
+        TransactionListService service = new TransactionListServiceImpl(transactionDao);
 
         TransactionHistoryApp app = new TransactionHistoryApp(service);
         app.run(1);
