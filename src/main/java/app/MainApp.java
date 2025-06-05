@@ -11,11 +11,11 @@ import java.util.function.Predicate;
 
 import static common.ErrorMessage.*;
 
-public class UserApp {
+public class MainApp {
     private final UserService userService;
     private final Scanner scanner;
 
-    public UserApp(UserService userService) {
+    public MainApp(UserService userService) {
         this.userService = userService;
         this.scanner = new Scanner(System.in);
     }
