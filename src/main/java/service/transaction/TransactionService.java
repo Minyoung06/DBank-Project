@@ -5,6 +5,7 @@ import domain.TransactionVO;
 import dao.AccountDao;
 import domain.AccountVO;
 import common.Session;
+import util.ValidatorUtil;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -30,6 +31,8 @@ public class TransactionService {
     public boolean transferByAccountNumber(String toAccountNumber,
                                             BigDecimal amount,
                                             String memo){
+
+
         // 로그인 여부 확인
         if(!Session.isLoggedIn()){
             System.err.println("[오류] 로그인 후 이용해주세요.");
@@ -37,7 +40,7 @@ public class TransactionService {
         }
 
         try{
-            // 보내는 사람 계좌 조회
+            // 내 계좌 조회
             int userId = Session.getUserId();
             AccountVO fromAcc = accountDao.getAccountByUserId(userId);
             if(fromAcc==null){
@@ -45,13 +48,20 @@ public class TransactionService {
                 return false;
             }
 
-            // 받는 사람 계좌 조회 및 이름 검증
+            // 잔액 검사
+            BigDecimal fromBalance = BigDecimal.valueOf(fromAcc.getBalance());
+            if (fromBalance.compareTo(amount) < 0) {
+                System.err.println("[오류] 계좌에 잔액이 부족합니다.");
+                return false;
+            }
 
+            // 받는 사람 계좌 조회 및 이름 검증
             AccountVO toAcc = accountDao.getAccountByNumber(toAccountNumber);
             if(toAcc==null){
                 System.err.println("[오류] 받는 사람 계좌를 찾을 수 없습니다");
                 return false;
             }
+            // 거래 객체 생성
             TransactionVO transaction = TransactionVO.builder()
                     .send_account_id(fromAcc.getAccountId())
                     .receiver_account_id(toAcc  .getAccountId())
@@ -59,6 +69,7 @@ public class TransactionService {
                     .memo              (memo)
                     .build();
 
+            // Dao 호출
             transactionDao.insert(transaction);
             return true;
         }catch (SQLException e){

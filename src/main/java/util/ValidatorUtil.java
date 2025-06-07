@@ -22,4 +22,8 @@ public class ValidatorUtil {
     public static boolean isValidSSN(String ssn) {
         return ssn.matches("^\\d{6}[1-4]\\d{6}$");
     }
+    // 계좌번호: 6자리-6자리 숫자
+    public static boolean isValidAccountNumber(String accountNumber) {
+        return accountNumber.matches("^\\d{6}-\\d{6}$");
+    }
 }

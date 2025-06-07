@@ -7,6 +7,7 @@ import common.Session;
 import dao.UserDao;
 import dao.UserDaoImpl;
 import domain.UserVO;
+import util.ValidatorUtil;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -27,11 +28,17 @@ public class TransactionServiceApp {
 
         while(true){
             System.out.println("\n=== 계좌 이체 ===");
-            System.out.print("- 받는 사람 계좌번호(’-’ 없이, q: 메뉴로) : ");
+            System.out.print("- 받는 사람 계좌번호(’-’ 포함, q: 메뉴로) : ");
             String toAccountNumber = sc.nextLine().trim();
+
             if (toAccountNumber.equalsIgnoreCase("q")) {
                 // 로그인 성공 메뉴 로직 호출
                 break;
+            }
+            //  계좌번호 형식 검증
+            if (!ValidatorUtil.isValidAccountNumber(toAccountNumber)) {
+                System.err.println("[입력 오류] 계좌번호 형식이 올바르지 않습니다. (6자리-6자리)");
+                continue;
             }
             // 금액 입력 및 포맷 체크
             System.out.print("- 금액: ");
