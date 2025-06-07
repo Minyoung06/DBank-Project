@@ -1,4 +1,4 @@
-package user;
+package manualTest;
 
 import dao.UserDao;
 import dao.UserDaoImpl;
