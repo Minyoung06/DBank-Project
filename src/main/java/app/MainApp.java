@@ -1,5 +1,6 @@
 package app;
 
+import database.JDBCUtil;
 import domain.AccountVO;
 import common.Session;
 import service.user.UserService;
@@ -11,27 +12,40 @@ import java.util.function.Predicate;
 
 import static common.ErrorMessage.*;
 
-public class UserApp {
+public class MainApp {
     private final UserService userService;
     private final Scanner scanner;
 
-    public UserApp(UserService userService) {
+    private final ProductListApp productListApp;
+    private final ProductJoinApp productJoinApp;
+    private final TransactionServiceApp transactionServiceApp;
+    private final TransactionHistoryApp transactionHistoryApp;
+
+    public MainApp(UserService userService,
+                   ProductJoinApp productJoinApp,
+                   ProductListApp productListApp,
+                   TransactionServiceApp transactionServiceApp,
+                   TransactionHistoryApp transactionHistoryApp) {
         this.userService = userService;
+        this.productJoinApp = productJoinApp;
+        this.productListApp = productListApp;
+        this.transactionServiceApp = transactionServiceApp;
+        this.transactionHistoryApp = transactionHistoryApp;
         this.scanner = new Scanner(System.in);
     }
 
     public void start(){
-        System.out.println("\n===1. 메인===");
+        System.out.println("\n===  메인  ===");
         System.out.println("1. 로그인");
         System.out.println("2. 회원가입");
-        System.out.println("3. 종료");
+        System.out.println("q. 종료");
 
-        int choice = inputInt("선택: ");
+        String choice = input("선택: ");
 
         switch (choice){
-            case 1 -> login();
-            case 2 -> register();
-            case 3 -> {
+            case "1" -> login();
+            case "2" -> register();
+            case "q" -> {
                 System.out.println("프로그램 종료");
                 System.exit(0);
             }
@@ -40,7 +54,7 @@ public class UserApp {
     }
 
     private void register() {
-        System.out.println("\n===2. 회원가입===");
+        System.out.println("\n===  회원가입  ===");
         boolean success = false;
 
         while(!success) {
@@ -80,7 +94,7 @@ public class UserApp {
     }
 
     private void login() {
-        System.out.println("\n===3. 로그인===");
+        System.out.println("\n===  로그인  ===");
         int attempts = 0;
         while(attempts<3) {
             String loginId = input("로그인 ID: ");
@@ -101,7 +115,7 @@ public class UserApp {
     private void showUserMenu() {
         while (Session.isLoggedIn()) {
             AccountVO loginAccount = userService.getAccountByUserId(Session.getUser().getUserId());
-            System.out.println("\n===4. 로그인 성공===");
+            System.out.println("\n===  로그인 성공  ===");
             System.out.println(loginAccount.getAccountNumber()+ " (계좌)");
             System.out.println("현재 잔액: "+loginAccount.getBalance()+"원");
             System.out.println("1. 계좌 상세 조회 및 거래 내역");
@@ -109,22 +123,24 @@ public class UserApp {
             System.out.println("3. 금융 상품 가입");
             System.out.println("4. 내 상품 목록");
             System.out.println("5. 로그아웃");
-            System.out.println("6. 종료");
+            System.out.println("q. 종료");
 
-            switch (inputInt("선택: ")) {
-                case 1 -> System.out.println("계좌 상세 조회 기능");
-                case 2 -> System.out.println("계좌 이체 기능");
-                case 3 -> System.out.println("금융 상품 가입 기능");
-                case 4 -> System.out.println("내 상품 목록 기능");
-                case 5 -> {
-                    Session.logout();
+            String choice = input("선택: ");
+            switch (choice) {
+                case "1" -> transactionHistoryApp.run(Session.getUser().getUserId());
+                case "2" -> transactionServiceApp.start();
+                case "3" -> productJoinApp.run();
+                case "4" -> productListApp.run();
+                case "5" -> {
                     System.out.println("로그아웃 되었습니다.");
+                    Session.logout();
                     return;
                 }
-                case 6 -> {
-                    Session.logout();
+                case "q" -> {
                     System.out.println("로그아웃 되었습니다.");
                     System.out.println("프로그램 종료");
+                    Session.logout();
+                    JDBCUtil.close(JDBCUtil.getConnection());
                     System.exit(0);
                 }
                 default -> System.out.println("잘못된 입력입니다.");
