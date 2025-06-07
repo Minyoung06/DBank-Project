@@ -55,33 +55,45 @@ public class MainApp {
 
     private void register() {
         System.out.println("\n===  회원가입  ===");
+        System.out.println("메인 화면으로 나가고 싶으시면 q를 눌러주세요.");
         boolean success = false;
 
         while(!success) {
             String name = input("이름: ");
+            if (isQuit(name)) return;
+
+
+
             String loginId = validatedInput(
                     "로그인 ID:",
                     INVALID_LOGIN_ID,
                     ValidatorUtil::isValidLoginId
             );
+            if(loginId==null) return;
 
             String password = validatedInput(
                     "비밀번호: ",
                     INVALID_PASSWORD,
                     ValidatorUtil::isValidPassword
             );
+            if(password==null) return;
 
             String phone = validatedInput(
                     "전화번호 (010-XXXX-XXXX): ",
                     INVALID_PHONE,
                     ValidatorUtil::isValidPhone
             );
+            if(phone==null) return;
+
             String address = input("주소: ");
+            if(isQuit(address)) return;
+
             String ssn = validatedInput(
                     "주민번호 (13자리): ",
                     INVALID_SSN,
                     ValidatorUtil::isValidSSN
             );
+            if(ssn==null) return;
 
             success = userService.register(name, loginId, password, phone, address, ssn);
             if (success) {
@@ -166,9 +178,13 @@ public class MainApp {
     private String validatedInput(String label, String errorMessage, Predicate<String> validator) {
         while (true) {
             String value = input(label);
+            if(isQuit(value)) return null;
             if (validator.test(value)) return value;
             System.out.println(errorMessage);
         }
     }
 
+    private boolean isQuit(String input){
+        return input.equalsIgnoreCase("q");
+    }
 }
