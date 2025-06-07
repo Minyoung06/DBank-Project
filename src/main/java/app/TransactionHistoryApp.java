@@ -40,12 +40,13 @@ public class TransactionHistoryApp {
             System.out.println("3. 날짜 (기본: 최근순)");
             System.out.println("m. 더 많은 내역 조회");
             System.out.println("q. 종료");
-            System.out.print("선택 → ");
+            System.out.print("선택 : ");
 
             String input = scanner.nextLine().trim();
 
             if ("q".equalsIgnoreCase(input)) {
-                exit();
+                System.out.println("거래 내역 조회를 종료합니다.");
+                return;  // 루프 탈출 및 함수 종료
             } else if ("m".equalsIgnoreCase(input)) {
                 System.out.print("조회할 거래 내역 개수 입력 → ");
                 try {
@@ -188,8 +189,7 @@ public class TransactionHistoryApp {
 
     private void exit() {
         scanner.close();
-        System.out.println("프로그램 종료");
-        System.exit(0);
+        return;
     }
 
     public static void main(String[] args) {
