@@ -48,7 +48,7 @@ public class TransactionHistoryApp {
                 System.out.println("정렬 메뉴를 종료합니다.");
                 return;
             } else if ("m".equalsIgnoreCase(input)) {
-                System.out.print("조회할 거래 내역 개수 입력 → ");
+                System.out.print("조회할 거래 내역 개수 입력: ");
                 try {
                     int newN = Integer.parseInt(scanner.nextLine().trim());
                     if (newN <= 0) {
@@ -100,19 +100,19 @@ public class TransactionHistoryApp {
 
             switch (sortBy) {
                 case "amount":
-                    orderPrompt = "정렬 방향 선택 (1. 많은순 2. 적은순) → ";
+                    orderPrompt = "정렬 방향 선택 (1. 많은순 2. 적은순): ";
                     ascDefault = false;  // 많은순 = 내림차순(false)
                     break;
                 case "timestamp":
-                    orderPrompt = "정렬 방향 선택 (1. 최신순 2. 오래된순) → ";
+                    orderPrompt = "정렬 방향 선택 (1. 최신순 2. 오래된순): ";
                     ascDefault = false;  // 최신순 = 내림차순(false)
                     break;
                 case "memo":
-                    orderPrompt = "정렬 방향 선택 (1. 가나다순 2. 역순) → ";
+                    orderPrompt = "정렬 방향 선택 (1. 가나다순 2. 역순): ";
                     ascDefault = true;   // 가나다순 = 오름차순(true)
                     break;
                 default:
-                    orderPrompt = "정렬 방향 선택 (1. 오름차순 2. 내림차순) → ";
+                    orderPrompt = "정렬 방향 선택 (1. 오름차순 2. 내림차순): ";
                     ascDefault = true;
             }
 
