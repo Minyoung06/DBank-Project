@@ -17,44 +17,19 @@ public class ProductListServiceImpl implements ProductListService {
     private boolean ascending = true;   // true: asc, false: desc
 
 
-    @Override
-    public List<UserProductVO> getSortedProductList() {
+    public List<UserProductVO> getSortedProductList(String sortBy, boolean ascending) {
         int userId = Session.getUserId();
         if (userId == -1) return List.of();
 
-        if (sortByName) {
-            return ascending
+        return switch (sortBy.toLowerCase()){
+            case "productname" -> ascending
                     ? dao.findAllOrderByProductNameAsc(userId)
                     : dao.findAllOrderByProductNameDesc(userId);
-        } else {
-            return ascending
+            case "enddate" -> ascending
                     ? dao.findAllOrderByEndDateAsc(userId)
                     : dao.findAllOrderByEndDateDesc(userId);
-        }
+            default -> dao.findAllOrderByEndDateDesc(userId);
+        };
     }
 
-    @Override
-    public void toggleSortByName() {
-        if (sortByName) ascending = !ascending;
-        else {
-            sortByName = true;
-            ascending = true;
-        }
-    }
-
-    @Override
-    public void toggleSortByEndDate() {
-        if (!sortByName) ascending = !ascending;
-        else {
-            sortByName = false;
-            ascending = true;
-        }
-    }
-
-    @Override
-    public String getCurrentSortStatus() {
-        String type = sortByName ? "상품명순" : "만기일순";
-        String order = ascending ? "오름차순" : "내림차순";
-        return type + " (" + order + ")";
-    }
 }
