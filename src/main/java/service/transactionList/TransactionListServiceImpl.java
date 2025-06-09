@@ -35,8 +35,12 @@ public class TransactionListServiceImpl implements TransactionListService {
                 comparator = Comparator.comparing(TransactionVO::getAmount);
                 break;
             case "memo":
-                comparator = Comparator.comparing(tx -> tx.getMemo() == null ? "" : tx.getMemo());
+                comparator = Comparator.comparing(
+                        tx -> tx.getMemo() == null ? "" : tx.getMemo(),
+                        String.CASE_INSENSITIVE_ORDER
+                );
                 break;
+
             case "timestamp":
                 comparator = Comparator.comparing(TransactionVO::getTimestamp);
                 break;
