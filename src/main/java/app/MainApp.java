@@ -107,10 +107,14 @@ public class MainApp {
 
     private void login() {
         System.out.println("\n===  로그인  ===");
+        System.out.println("메인 화면으로 나가고 싶으시면 q를 눌러주세요.");
         int attempts = 0;
         while(attempts<3) {
             String loginId = input("로그인 ID: ");
+            if(isQuit(loginId)) return;
+
             String password = input("비밀번호: ");
+            if(isQuit(password)) return;
 
             if (userService.login(loginId, password)) {
                 System.out.println("로그인 성공");
