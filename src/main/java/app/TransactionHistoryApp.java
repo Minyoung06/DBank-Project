@@ -35,9 +35,9 @@ public class TransactionHistoryApp {
         int currentLimit = 10; // 기본 조회 개수
 
         while (true) {
-            System.out.println("1. 금액 (기본: 많은순)");
-            System.out.println("2. 메모 (기본: 내림차순)");
-            System.out.println("3. 날짜 (기본: 최근순)");
+            System.out.println("1. 금액순순");
+            System.out.println("2. 메모순");
+            System.out.println("3. 날짜순");
             System.out.println("m. 더 많은 내역 조회");
             System.out.println("q. 종료");
             System.out.print("선택 : ");
