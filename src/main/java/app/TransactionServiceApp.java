@@ -38,6 +38,7 @@ public class TransactionServiceApp {
             //  계좌번호 형식 검증
             if (!ValidatorUtil.isValidAccountNumber(toAccountNumber)) {
                 System.err.println("[입력 오류] 계좌번호 형식이 올바르지 않습니다. (6자리-6자리)");
+                System.out.print("");
                 continue;
             }
             // 금액 입력 및 포맷 체크
