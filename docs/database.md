@@ -15,7 +15,7 @@
 
 | 개념적 모델링 (Conceptual) | 논리적 모델링 (Logical)                 | 물리적 모델링 (Physical)                  |
 |-----------------------------|-----------------------------------|-------------------------------------|
-| ![Conceptual ERD](./conceptual_ERD.png) | ![Logical ERD](./logical_ERD.png) | ![Physical ERD](./physical_ERD.png) |
+| ![Conceptual ERD](ERD/conceptual_ERD.png) | ![Logical ERD](ERD/logical_ERD.png) | ![Physical ERD](ERD/physical_ERD.png) |
 
 
 ---
