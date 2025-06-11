@@ -38,3 +38,6 @@ Thumbs.db
 
 ### log ###
 *.log
+
+### Setting ###
+src/main/resources/application.properties

@@ -43,8 +43,69 @@
 ---
 
 ## 시작 가이드
-> 완성되고 내용 추가 예정
 
+### ✅ 1. 실행 전 준비
+
+- Java 17 이상 설치 필요
+- MySQL 서버 실행 중이어야 하며, `application.properties` 설정과 DB 상태가 일치해야 합니다.
+
+> `src/main/resources/application.properties.template`를 복사하여  
+> `application.properties`로 이름을 바꾸고, 본인 환경에 맞게 설정하세요:
+>
+> ```properties
+> driver=com.mysql.cj.jdbc.Driver
+> url=jdbc:mysql://127.0.0.1:3306/DBank
+> id=your_db_id
+> password=your_db_password
+> ```
+
+> ⚠️ `application.properties`는 보안상 `.gitignore`에 포함되어 있어 GitHub에 업로드되지 않습니다.
+
+#### 📌 추가 체크리스트
+
+- [ ] **DB 및 테이블 구성 완료 여부**  
+  MySQL에 `DBank` 데이터베이스와 관련 테이블(user, account 등)이 생성되어 있어야 합니다.
+
+- [ ] **DB 계정 권한 확인**  
+  `application.properties`에 명시한 DB 계정은 `SELECT`, `INSERT`, `UPDATE`, `DELETE` 권한이 있어야 합니다.
+
+- [ ] **MySQL 포트 확인 (기본: 3306)**  
+  다른 프로세스가 포트를 점유 중이면 연결 오류 발생 가능성이 있습니다.
+
+- [ ] **UTF-8 인코딩 설정 확인**
+    - 모든 `.java` 파일, `.properties` 파일이 UTF-8로 인코딩되어야 합니다.
+    - IntelliJ 기준: `File > File Encoding > UTF-8`
+
+- [ ] **방화벽 또는 보안 프로그램 예외 설정 (Windows)**  
+  MySQL 접근이 차단되지 않도록 방화벽, 백신 등의 설정을 확인하세요.
+
+> 보안을 위해 `application.properties`는 `.gitignore`에 포함시키는 것을 권장합니다.
+
+### ✅ 2. 프로젝트 다운로드 및 빌드
+
+```bash
+# 프로젝트 클론
+git clone https://github.com/your-username/DBank-Project.git
+cd DBank-Project
+
+# fat JAR 생성
+./gradlew shadowJar
+```
+
+> 빌드가 완료되면 실행 파일은 `build/libs/DBank-Project-1.0-SNAPSHOT-all.jar` 경로에 생성됩니다.
+
+### ✅ 3. 실행 방법
+
+#### Windows (PowerShell)
+```bash
+java --% -Dfile.encoding=UTF-8 -jar build/libs/DBank-Project-1.0-SNAPSHOT-all.jar
+```
+#### macOS / Linux / Git Bash
+```bash
+java -Dfile.encoding=UTF-8 -jar build/libs/DBank-Project-1.0-SNAPSHOT-all.jar
+```
+
+> ⚠️ 실행 시 한글이 깨질 경우 -Dfile.encoding=UTF-8 옵션이 포함되어 있는지 확인하세요.
 ---
 
 ## 🖼️ 화면 구성 요약
@@ -100,9 +161,8 @@ DBank-Project/
 
 ---
 
-## 🔗 배포 링크
+## 🔗 관련 링크
 
-- **Notion 프로젝트 소개 페이지**: [링크 예정]
-- **GitHub Pages 배포 주소**: [링크 예정]
+- **Notion 프로젝트 소개 페이지**: [DB 프로젝트 - 은행 서비스](https://jazzy-newt-fce.notion.site/DB-1f371cb1a07180428f2ff1c4655ef679)
 
 
