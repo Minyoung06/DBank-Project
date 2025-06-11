@@ -1,9 +1,11 @@
 # 💰 KB 이체 및 금융상품 가입 시스템
 
+> KB IT’s Your Life 6기 교육 과정 중 진행한 DB, JDBC를 활용한 팀 프로젝트입니다.
+로그인 기능을 포함한 **이체 서비스**와 **금융상품 가입 기능**을 구현한 은행 시스템입니다.
 --- 
 
 - **주제**: 은행 이체 서비스 및 상품 가입 서비스 구현
-- **기간**: 2025.05.12 ~ 2025.mm.dd
+- **기간**: 2025.05.12 ~ 2025.06.11
 - **참여 인원**: 5명 (고두환, 김은수, 양민영, 이건우, 이수현)
 - **목표**: MySQL, JDBC를 활용한 은행 시스템 구현 및 데이터 흐름 학습
 
@@ -11,13 +13,13 @@
 
 ## 👥 팀원 소개 & 역할
 
-| 이름     | 역할                                                                                                                                                                                                                                       | GitHub ID       |
-|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| 고두환   | • 거래 VO 및 DAO 구현 (TransactionVO, TransactionDao, TransactionDaoImpl)<br>• 거래 서비스 계층 구현 (TransactionService)<br>• 거래 실행부 구현 (TransactionApp)<br>• DB 테이블 정의 (TransactionTable)                                                            | [GitHub](https://github.com/story125)   |
-| 김은수   | • 상품 VO 및 DAO 구현 (ProductVO, ProductDao, ProductDaoImpl)<br>• 거래 내역 조회 서비스 (TransactionListService, TransactionListServiceImpl)<br>• 거래 조회 실행부 (TransactionHistoryApp)<br>• DB 테이블 정의 (ProductTable)                                     | [GitHub](https://github.com/ensookim)   |
-| 양민영   | • 계좌 VO 및 DAO 구현 (AccountVO, AccountDao, AccountDaoImpl)<br>• 상품 목록 조회 서비스 구현 (ProductListService, ProductListServiceImpl)<br>• 메인, 상품 리스트 실행부 구현 (MainApp, ProductListApp)<br>• DB 테이블 정의 (AccountTable)<br>• Notion 문서화 / ReadMe 문서 작성 | [GitHub](https://github.com/Minyoung06)   |
-| 이건우   | • 유저 상품 VO 및 DAO 구현 (UserProductVO, UserProductDao, UserProductDaoImpl)<br>• 상품 가입 서비스 (ProductJoinService, ProductJoinServiceImpl)<br>• 상품 가입 실행부 (ProductJoinApp)•<br> DB 테이블 정의 (UserProductTable)                                        | [GitHub](https://github.com/Kyun17)   |
-| 이수현   | • 유저 VO 및 DAO 구현 (UserVO, UserDao, UserDaoImpl)<br> • 유저 서비스 계층 구현 (UserService, UserServiceImpl)<br>• 세션 관리 (Session)<br>• 메인 실행 (MainApp)<br>• 유틸리티 클래스 (AccountUtil, ValidatorUtil)<br>• DB 테이블 정의 (UserTable)                        | [GitHub](https://github.com/soohyun1904)   |
+| 이름     | 역할                                                                                                                                                                                                                                                                                                                                   | GitHub ID       |
+|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| 고두환   | • 거래 VO 및 DAO 구현 (TransactionVO, TransactionDao, TransactionDaoImpl)<br>• 거래 서비스 계층 구현 (TransactionService)<br>• 거래 실행부 구현 (TransactionApp)<br>• DB 테이블 정의 (TransactionTable)                                                                                                                                                        | [GitHub](https://github.com/story125)   |
+| 김은수   | • 상품 VO 및 DAO 구현 (ProductVO, ProductDao, ProductDaoImpl)<br>• 거래 내역 조회 서비스 (TransactionListService, TransactionListServiceImpl)<br>• 거래 조회 실행부 (TransactionHistoryApp)<br>• DB 테이블 정의 (ProductTable)                                                                                                                                 | [GitHub](https://github.com/ensookim)   |
+| 양민영   | • 계좌 VO 및 DAO 구현 (AccountVO, AccountDao, AccountDaoImpl)<br>• 상품 목록 조회 서비스 구현 (ProductListService, ProductListServiceImpl)<br>• 메인, 상품 리스트 실행부 구현 (MainApp, ProductListApp)<br>• DB 테이블 정의 (AccountTable)<br>• Notion 문서화 / ReadMe 문서 작성<br>• GitHub 배포 준비 (application.properties 관리, .gitignore 설정, MainLauncher 구성, Gradle 빌드 설정) | [GitHub](https://github.com/Minyoung06)   |
+| 이건우   | • 유저 상품 VO 및 DAO 구현 (UserProductVO, UserProductDao, UserProductDaoImpl)<br>• 상품 가입 서비스 (ProductJoinService, ProductJoinServiceImpl)<br>• 상품 가입 실행부 (ProductJoinApp)<br>• DB 테이블 정의 (UserProductTable)                                                                                                                                | [GitHub](https://github.com/Kyun17)   |
+| 이수현   | • 유저 VO 및 DAO 구현 (UserVO, UserDao, UserDaoImpl)<br> • 유저 서비스 계층 구현 (UserService, UserServiceImpl)<br>• 세션 관리 (Session)<br>• 메인 실행 (MainApp)<br>• 유틸리티 클래스 (AccountUtil, ValidatorUtil)<br>• DB 테이블 정의 (UserTable)                                                                                                                    | [GitHub](https://github.com/soohyun1904)   |
 
 ---
 
