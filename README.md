@@ -87,7 +87,7 @@
 
 ```bash
 # 프로젝트 클론
-git clone https://github.com/your-username/DBank-Project.git
+git clone https://github.com/Minyoung06/DBank-Project.git
 cd DBank-Project
 
 # fat JAR 생성
